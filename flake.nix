@@ -32,6 +32,8 @@
             alias find=fd
           '';
         };
+
+        packages.default = nixpkgs.legacyPackages.${system}.callPackage ./. { };
       }
     );
 }
