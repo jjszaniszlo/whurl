@@ -1,0 +1,34 @@
+//***************
+// Functions
+//***************
+// 
+// All functions are anonymous, but can be assigned to variables.
+
+// functions
+factorial is () {
+  
+}
+
+// runtime functions
+
+let do_operation = (a, b) {
+  return a + b
+}
+
+// functions can return functions
+create_entity is (type) {
+  return (pos) {
+    return {
+      type = type,
+      pos = pos,
+    }
+  }
+}
+
+// example of using functions to act as a sort of template for object creation in this example
+let create_monster = create_entity("Monster")
+let create_player = create_entity("Player")
+
+let monster = create_monster({0, 0})
+let player = create_player({10, 0})
+

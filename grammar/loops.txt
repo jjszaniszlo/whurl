@@ -1,0 +1,41 @@
+// for loop
+// This is the only loop available
+
+
+// i will be 0, 1, ... 10
+for i in [0..10] {  // inclusive set
+  println(i)
+}
+
+// i will be 0, 1, ... 9
+for i in [0..<10] {  // exclusive set
+  println(i)
+}
+
+// loop through array
+let array = {5, 32, 60, 10}
+for elem in array {
+  println(elem)
+}
+
+// loop through set
+let colors = {
+  red = {255, 0, 0},
+  blue = {0, 0, 255},
+  green = {0, 255, 0},
+}
+
+for (k, v) in colors {
+  println("${k}'s rgb is ${v}")
+}
+
+// similar to a while true loop
+for true {
+  break
+}
+
+// similar to while loop
+let i = 0
+for i < 10 {
+  i = i + 1
+}

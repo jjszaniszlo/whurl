@@ -1,0 +1,49 @@
+//***************
+// Objects
+//***************
+// 
+// Objects are essentially key, value pairs similar to maps.
+//
+//// @object
+// @object is an attribute which uses the calling object's signature and the recognized signature within the function body to determine if an object is suitable for that method.
+
+// objects can be intialized like this.
+let John = {
+  name = "John",
+  age = 21,
+}
+
+// or like this
+let init_person = (name, age) {
+  return {
+    name = name,
+    age = age,
+  }
+}
+
+Harry = init("Harry", 21)
+
+// functions operativing on objects can be done like this:
+introduce is @object() {  // they must be constant because a hash is generated at compile stages.
+  println("Hi, I am ${self.name}, I am ${self.age} years old!")
+}
+
+
+// with the @inherit attribute, fields of an object can be taken and applied to a new object
+let make_worker_from_person = @object(occupation) {
+  return @inherit (self) name, age {
+    occupation = occupation
+  }
+}
+
+// inherit can also be used as such:
+
+let Bob = {
+  name = "Bob",
+  age = 30,
+}
+
+let Bob_Worker = @inherit (Bob) name, age {
+  occupation = "Construction Worker"
+}
+
