@@ -1,11 +1,27 @@
+use std::path::PathBuf;
+
 use clap::Parser;
 
 #[derive(Parser)]
-#[command(version)]
+#[command(version, about, long_about = None)]
 pub struct Opts {
     #[arg(
-        default_value_t, 
+        required_unless_present = "input_file",
+        default_value_t,
         hide_default_value = true
     )]
-    pub url: String,
+    pub id: String,
+
+    #[arg(
+        required_unless_present = "input_file",
+        default_value_t,
+        hide_default_value = true
+    )]
+    pub name: String,
+
+    #[arg(short, long, default_value_t = false)]
+    pub verbose : bool,
+
+    #[arg(short, long, group = "input_file")]
+    pub file : Option<PathBuf>
 }
