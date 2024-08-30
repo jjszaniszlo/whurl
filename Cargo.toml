@@ -11,6 +11,7 @@ serde_derive = "1.0.209"
 ureq = "2.10.1"
 toml = "0.8.19"
 path-clean = "1.0.1"
+regex = "1.3.9"
 
 [dependencies.clap]
 version = "4.5.1"

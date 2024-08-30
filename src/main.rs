@@ -2,6 +2,7 @@ mod cli;
 
 use anyhow::Result;
 use clap::Parser;
+use regex::Regex;
 
 use std::{
     io::BufWriter,
@@ -58,16 +59,23 @@ fn get_wallpaper_entry(opts: &WallpaperOpts) -> Result<WallpaperEntry> {
         .into_string()?;
     let v: WallhavenResponse = serde_json::from_str(&body)?;
 
-    let ext = v.data.file_type.replace("image/", "");
-    let hash = nix_prefetch_url(&url, &format!("{}.{}", &opts.name, &ext));
+    let ext_regex = Regex::new(r"\.([0-9a-z]+)$")?;
+    let ext_captures = ext_regex.captures_iter(&v.data.path);
 
-    let entry = WallpaperEntry {
+    let mut ext : String = String::new();
+    for cap in ext_captures {
+        ext = cap[1].to_string();
+        break;
+    }
+
+    let hash = nix_prefetch_url(&v.data.path, &format!("{}.{}", &opts.name, &ext));
+    
+    Ok(WallpaperEntry {
         name : opts.name.clone(),
         sha256 : hash?,
         url : v.data.path,
-        ext,
-    };
-    Ok(entry)
+        ext: ext.to_string(),
+    })
 }
 
 pub fn nix_prefetch_url(url: &String, name: &String) -> Result<String> {
