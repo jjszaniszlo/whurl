@@ -30,8 +30,8 @@ extern crate serde_derive;
 struct WallpaperEntry {
     name: String,
     ext: String,
-    hash: String,
-    path: String,
+    sha256: String,
+    url: String,
 }
 
 struct WallpaperOpts {
@@ -63,8 +63,8 @@ fn get_wallpaper_entry(opts: &WallpaperOpts) -> Result<WallpaperEntry> {
 
     let entry = WallpaperEntry {
         name : opts.name.clone(),
-        hash : hash?,
-        path : v.data.path,
+        sha256 : hash?,
+        url : v.data.path,
         ext,
     };
     Ok(entry)
