@@ -1,0 +1,22 @@
+-- Minimum Viable Product --
+  - use image id to retrieve image info
+    - path
+    - extension
+  - use nix prefetch to retrieve a viable sha256 hash.
+  - cli for individual images to utilize core features.
+  - convert a toml file that looks like:
+    ```
+      name = "id"
+    ```
+    to a json file that contains all necessary info.
+    ```
+      [
+        {
+          "name" : $name,
+          "ext" : $ext,
+          "path" : $path,
+          "sha256" : $sha256,
+        },
+        ...
+      ]
+    ```

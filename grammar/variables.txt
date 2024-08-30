@@ -1,8 +1,0 @@
-// regular declaration
-let x = 2
-
-// reassignment
-x = x + 3
-
-// constant
-my_name is "John"

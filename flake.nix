@@ -1,39 +1,25 @@
 {
-  description = "A devShell example";
+  description = "jace";
 
   inputs = {
     nixpkgs.url      = "github:NixOS/nixpkgs/nixos-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    flake-utils.url  = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, rust-overlay, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        overlays = [ (import rust-overlay) ];
-        pkgs = import nixpkgs {
-          inherit system overlays;
-        };
-      in
-      {
-        devShells.default = with pkgs; mkShell {
-          buildInputs = [
-            openssl
-            pkg-config
-            eza
-            fd
-            rust-bin.beta.latest.default
-            rustfmt       # Formatter
-            clippy        # Linter
-          ];
-
-          shellHook = ''
-            alias ls=eza
-            alias find=fd
-          '';
-        };
-
-        packages.default = nixpkgs.legacyPackages.${system}.callPackage ./. { };
-      }
-    );
+  outputs = { self, nixpkgs, ... }: let
+    supportedSystems = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+    pkgsFor = nixpkgs.legacyPackages;
+  in {
+    packages = forAllSystems (system: {
+      default = pkgsFor.${system}.callPackage ./package.nix {};
+    });
+    devShells = forAllSystems (system: {
+      default = pkgsFor.${system}.callPackage ./shell.nix {};
+    });
+  };
 }
