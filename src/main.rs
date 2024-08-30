@@ -4,11 +4,9 @@ use anyhow::Result;
 use clap::Parser;
 use regex::Regex;
 
-use std::{
-    io::BufWriter,
-    fs::File,
-    process::{Command, Stdio},
-};
+use std::io::BufWriter;
+use std::fs::File;
+use std::process::{Command, Stdio};
 
 use std::env;
 use std::io;
